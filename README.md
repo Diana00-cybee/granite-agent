@@ -34,3 +34,10 @@ pip install -r requirements.txt
 ```
 python cli.py
 ```
+
+### Web Search
+you can activate web search using keyword **search**:
+
+```
+search <query>
+```
