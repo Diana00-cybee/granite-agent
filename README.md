@@ -85,3 +85,7 @@ you can activate web search using keyword **search**:
 ```
 search <query>
 ```
+
+## Author
+
+Ville Pakarinen (@vpakarinen2)
