@@ -38,7 +38,7 @@ agent_config:
       - always use simple lists and bullet points when answering, and avoid long paragraphs.
       - always use simple lists and numbers when answering, and avoid long paragraphs.
       - When answering a question, always use one type of list (either bullet points or numbered lists) and avoid mixing them in the same answer.
-      - Do to use tables or other complex formatting when answering questions, and stick to simple lists and bullet points.
+      - Do not use tables or other complex formatting when answering questions, and stick to simple lists and bullet points.
       - Do not use markdown or any other formatting when answering questions, and stick to plain text.
       - never use more than 5 bullet points in a single answer.
       - never use more than 5 numbered lists in a single answer.
