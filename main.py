@@ -1,6 +1,7 @@
-import yaml
-import torch
 import threading
+import torch
+import yaml
+import gc
 
 from transformers import (
     AutoModelForCausalLM,
@@ -29,6 +30,7 @@ class ThreadKillSwitch(StoppingCriteria):
     def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor, **kwargs) -> bool:
         return self.halt_generation
 
+
 def initialize_engine():
     agent_logger.info("Initializing Granite-3.3-2B engine...")
     
@@ -47,21 +49,25 @@ def initialize_engine():
         device_map="auto",
         attn_implementation="sdpa",
         low_cpu_mem_usage=True,        
-        torch_dtype=torch.float16,     
+        torch_dtype=torch.float16     
     )
-    model.config.max_position_embeddings = 4096
     
     lora_repo = config['agent_config']['model'].get('lora_repo_id', 'none')
     if lora_repo and str(lora_repo).strip().lower() != 'none':
         model = apply_lora_adapter(model, lora_repo)
     
     model.config.max_position_embeddings = 4096
+    model.config.pad_token_id = tokenizer.eos_token_id
     torch.cuda.empty_cache()                    
     
     return tokenizer, model
 
+
 def execute_single_task(user_input: str, tokenizer, model, message_history: list):
-    if len(message_history) > 9: 
+    gc.collect()
+    torch.cuda.empty_cache()
+
+    if len(message_history) > 7: 
         trimmed_history = [message_history[0]] + message_history[-8:]
         message_history.clear()
         message_history.extend(trimmed_history)
@@ -110,7 +116,8 @@ def execute_single_task(user_input: str, tokenizer, model, message_history: list
         "repetition_penalty": config['agent_config']['generation']['repetition_penalty'],
         "do_sample": True,
         "use_cache": True,
-        "pad_token_id": tokenizer.eos_token_id
+        "pad_token_id": tokenizer.eos_token_id,
+        "eos_token_id": tokenizer.eos_token_id
     }
 
     gen_thread = threading.Thread(target=model.generate, kwargs=gen_kwargs)
@@ -131,6 +138,11 @@ def execute_single_task(user_input: str, tokenizer, model, message_history: list
         gen_thread.join()
         print() 
         message_history.append({"role": "assistant", "content": generated_text.strip()})
+
+        del inputs
+        gc.collect()
+        torch.cuda.empty_cache()
+
         return generated_text.strip()
 
     except KillSwitchTriggeredError:
@@ -138,4 +150,3 @@ def execute_single_task(user_input: str, tokenizer, model, message_history: list
         torch.cuda.empty_cache()
         print()
         return "[SYSTEM INTERVENTION: Boundary violation.]"
-
