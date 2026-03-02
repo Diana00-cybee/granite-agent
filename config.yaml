@@ -15,7 +15,7 @@ agent_config:
   generation:
     temperature: 0.15           
     repetition_penalty: 1.12    
-    max_new_tokens: 4096       
+    max_new_tokens: 1024      
     do_sample: true             
 
   execution:
