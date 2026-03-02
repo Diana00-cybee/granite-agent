@@ -1,11 +1,13 @@
 # 🥷 Granite Agent
 
-Semi-autonomous SLM agent powered by IBM Granite with chain-of-thought.
+Semi-autonomous SLM agent powered by IBM Granite.
 
-Granite Agent is blazing fast leveraging Granite 3.3 2B model and 4-bit quantization.
+Granite Agent is blazing fast leveraging Granite 3.3 2B model.
 
 ## ✨ Key Features
 - **Web Search:** Injects live data into the model context to ensure factual accuracy and eliminate hallucinations.
+
+- **Deep Scraping:** System uses Browser-impersonation scraping to bypass bot protections and deep-read articles.
   
 - **VRAM Optimization:** Engineered for consumer hardware using 4-bit quantization and rolling history window.
   
