@@ -111,7 +111,6 @@ def execute_single_task(user_input: str, tokenizer, model, message_history: list
         "streamer": streamer,
         "stopping_criteria": StoppingCriteriaList([kill_switch]),
         "max_new_tokens": config['agent_config']['generation']['max_new_tokens'],
-        "max_length": 4096,
         "temperature": config['agent_config']['generation']['temperature'],
         "repetition_penalty": config['agent_config']['generation']['repetition_penalty'],
         "do_sample": True,
@@ -150,3 +149,4 @@ def execute_single_task(user_input: str, tokenizer, model, message_history: list
         torch.cuda.empty_cache()
         print()
         return "[SYSTEM INTERVENTION: Boundary violation.]"
+
