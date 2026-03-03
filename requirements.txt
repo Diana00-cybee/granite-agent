@@ -1,6 +1,8 @@
 transformers>=4.40.0
 bitsandbytes>=0.43.0
 accelerate>=0.29.0
+beautifulsoup4
 PyYAML>=6.0.1
 peft>=0.10.0
+curl_cffi
 ddgs
