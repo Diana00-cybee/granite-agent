@@ -13,7 +13,7 @@ def get_current_datetime():
     return now.strftime("%A, %B %d, %Y | %H:%M:%S")
 
 
-def perform_web_search(query: str, max_results=4):
+def perform_web_search(query: str, max_results=5):
     """Executes live web search and deep-reads the top result."""
     agent_logger.info(f"External Search Triggered: '{query}'")
     
@@ -63,3 +63,4 @@ def save_to_file(content: str, prompt_as_filename: str):
     except Exception as e:
         agent_logger.error(f"Failed to save file: {str(e)}")
         return None
+
