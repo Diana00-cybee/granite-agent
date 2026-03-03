@@ -8,7 +8,7 @@ from log import agent_logger
 def scrape_url(url, max_chars=1500):
     """Fetches webpage using advanced browser impersonation."""
     try:
-        agent_logger.info(f"Scraping URL for deep context: {url}")
+        agent_logger.info(f"Scraping URL for deep context: {url}\n")
         
         response = requests.get(
             url, 
@@ -34,3 +34,4 @@ def scrape_url(url, max_chars=1500):
     except Exception as e:
         agent_logger.error(f"Failed to scrape {url}: {str(e)}")
         return f"[Content blocked by website security: {str(e)}. Rely on the search snippet instead.]"
+
