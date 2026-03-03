@@ -12,6 +12,12 @@ agent_config:
     keywords:
       - "search"
 
+  file_output_config:
+    enabled: true
+    keywords:
+      - "save"
+      - "export"
+      
   generation:
     temperature: 0.15           
     repetition_penalty: 1.12    
