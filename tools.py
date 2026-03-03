@@ -64,3 +64,30 @@ def save_to_file(content: str, prompt_as_filename: str):
         agent_logger.error(f"Failed to save file: {str(e)}")
         return None
 
+
+def apply_formatting_filter(text: str, target_format: str):
+    """Formats text into bullets, numbers, or paragraphs."""
+    clean_text = text.split("</think>")[-1].strip() if "</think>" in text else text.strip()
+    lines = [line.strip() for line in clean_text.split('\n') if line.strip()]
+    
+    strip_pattern = r'^[\d\.\-\*\s]+'
+
+    if target_format == "bullets":
+        formatted_lines = []
+        for line in lines:
+            content = re.sub(strip_pattern, '', line).strip()
+            formatted_lines.append(f"- {content}")
+        return "\n".join(formatted_lines)
+    
+    if target_format == "numbers":
+        formatted_lines = []
+        for i, line in enumerate(lines):
+            content = re.sub(strip_pattern, '', line).strip()
+            formatted_lines.append(f"{i+1}. {content}")
+        return "\n".join(formatted_lines)
+    
+    if target_format == "clean":
+        paragraph = " ".join(lines)
+        return re.sub(r'[\*\#\_\[\]\(\)]', '', paragraph)
+
+    return clean_text
