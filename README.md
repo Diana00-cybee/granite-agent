@@ -64,11 +64,20 @@ Nanobanana 2 is a cutting-edge AI image generator and editor, now integrated as 
 python cli.py
 ```
 
-### Web Search
+### Commands
+
+#### Web Search
 you can activate web search using keyword **search**:
 
 ```
 search <query>
+```
+
+#### Save File
+you can activate file save using keyword **save**:
+
+```
+save to a file
 ```
 
 ## ☕ Support
