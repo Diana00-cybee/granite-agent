@@ -2,6 +2,7 @@ import datetime
 import os
 import re
 
+from validation import is_url_accessible
 from scrape import scrape_url
 from log import agent_logger
 from ddgs import DDGS
@@ -14,7 +15,7 @@ def get_current_datetime():
 
 
 def perform_web_search(query: str, max_results=5):
-    """Executes live web search and deep-reads the top result."""
+    """Executes live web search and hunts for valid source."""
     agent_logger.info(f"External Search Triggered: '{query}'")
     
     try:
@@ -22,18 +23,38 @@ def perform_web_search(query: str, max_results=5):
         with DDGS() as ddgs:
             ddgs_results = list(ddgs.text(query, max_results=max_results))
             
-            for index, r in enumerate(ddgs_results):
-                if index == 0:
+            has_deep_context = False
+            for i, r in enumerate(ddgs_results):
+                if not is_url_accessible(r['href']):
+                    agent_logger.warning(f"Skipping dead link: {r['href']}")
+                    continue
+
+                if not has_deep_context:
                     full_text = scrape_url(r['href'], max_chars=2500)
-                    results.append(f"--- TOP RESULT (FULL TEXT) ---\nSOURCE: {r['href']}\nCONTENT:\n{full_text}\n---------------------------")
-                else:
-                    results.append(f"SOURCE: {r['href']}\nSNIPPET: {r['body']}")
+                    
+                    if "[ERROR:" not in full_text and "[Content blocked" not in full_text:
+                        results.append(
+                            f"--- VALIDATED DEEP CONTEXT ---\n"
+                            f"SOURCE: {r['href']}\n"
+                            f"CONTENT:\n{full_text}\n"
+                            f"---------------------------"
+                        )
+                        has_deep_context = True
+                        agent_logger.info(f"Successfully validated context from: {r['href']}")
+                        continue
+                
+                results.append(f"SOURCE: {r['href']}\nSNIPPET: {r['body']}")
         
         if not results:
             agent_logger.warning(f"No results found for query: {query}")
             return "No relevant web data found."
             
-        return "\n\n".join(results)
+        total_sources = len(results)
+        agent_logger.info(f"Total valid sources compiled: {total_sources}")
+        
+        formatted_results = f"[TOTAL SOURCES COMPILED: {total_sources}]\n\n" + "\n\n".join(results)
+        
+        return formatted_results
         
     except Exception as e:
         agent_logger.error(f"DDGS Search Error: {str(e)}")
