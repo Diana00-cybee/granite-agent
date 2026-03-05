@@ -5,19 +5,20 @@ Semi-autonomous SLM agent powered by IBM Granite.
 Granite Agent is blazing fast using Granite 2B model and 4-bit quantization.
 
 ## ⭐ Key Features
-- **Web Search:** Injects live data into the model context to ensure factual accuracy and eliminate hallucinations.
-  
-- **Deep Scraping:** System uses Browser-impersonation scraping to bypass bot protections and deep-read articles.
-  
-- **VRAM Optimization:** Engineered for consumer hardware using 4-bit quantization and rolling history window.
-  
-- **Plain-Text:** Strips away Markdown and complex formatting to focus model's attention on raw logic and data.
-  
-- **Memory Management:** Implements hard cache flushing and manual garbage collection to maintain stability.
+
+- **Web Search:** Injects live data into the model context to ensure factual accuracy and prevent hallucination.
+
+- **Memory Management:** Implements cache flushing and manual garbage collection to maintain stability.
 
 - **Reasoning:** Employs dedicated <think> block for step-by-step logic before delivering the final result.
 
 - **Uncensored:** Fused with specialized LoRA adapter for unrestricted access to sensitive data.
+
+- **Deep Scraping:** System uses Browser-impersonation scraping to bypass bot protection.
+
+- **Plain-Text:** Strips away complex formatting to focus model's attention on raw logic.
+
+- **VRAM Optimization:** Engineered for consumer hardware using 4-bit quantization.
 
 ## 🛠️ Installation
 
@@ -69,21 +70,24 @@ python cli.py
 ### Commands
 
 ```bash
-#### Web Search
+Web Search
 Activate using keyword: search
 
-#### Save File
+Save File
 Activate using keyword: save
 
-#### Answer Format
+Trusted Sites
+Activate using keyword: whitelist
+
+Answer Format
 Activate using one of these keywords:
 
 bullet point
 numbered
-clean
 markdown
+clean
 
-#### Clean Output
+Clean Output
 To have cleaner output use one of these:
 
 no more than three sentences
