@@ -45,15 +45,26 @@ pip install -r requirements.txt
 ## Examples
 
 ```
-User: search what is genie 3, do not add more than three sentences
-Agent: 2026-03-03 00:58:21,816 - GraniteAgent - INFO - External Search Triggered: 'search what is genie 3, do not add more than three sentences'
-2026-03-03 00:58:24,510 - GraniteAgent - INFO - Scraping URL for deep context: https://deepmind.google/models/genie/
-Genie 3 is a **real-time, interactive 3D world generator** developed by Google DeepMind. It transforms textual descriptions into photorealistic environments running at 24 fps, allowing users to navigate and manipulate the scene indefinitely. Key features include dynamic world events, 720p resolution, and no frame drops during prolonged interaction.
----
-User: search what is nanobanana 2, do not add more than three sentences
-Agent: 2026-03-03 00:59:08,945 - GraniteAgent - INFO - External Search Triggered: 'search what is nanobanana 2, do not add more than three sentences'
-2026-03-03 00:59:10,422 - GraniteAgent - INFO - Scraping URL for deep context: https://www.ainanobanana2.com/
-Nanobanana 2 is a cutting-edge AI image generator and editor, now integrated as Google's default tool. It supports 1K, 2K, and 4K resolutions for high-quality output, including physical prints. Its sophisticated algorithms enable precise text-to-image conversion, iterative refinement, and realistic scene reconstruction.
+--- Granite Agent ---
+Type 'exit' or 'quit' to stop.
+
+User: search resident evil requiem metacritic pc, summary, no more than three sentences
+Agent: 2026-03-05 11:50:13,008 - GraniteAgent - INFO - Sanitized query for search engine: 'resident evil requiem metacritic pc'
+2026-03-05 11:50:13,044 - GraniteAgent - INFO - Broad Search Triggered: 'resident evil requiem metacritic pc'
+2026-03-05 11:50:15,354 - GraniteAgent - INFO - Scraping URL: https://www.metacritic.com/game/resident-evil-requiem/
+2026-03-05 11:50:15,917 - GraniteAgent - INFO - Successfully validated deep context from: https://www.metacritic.com/game/resident-evil-requiem/
+2026-03-05 11:50:21,565 - GraniteAgent - INFO - Total valid sources compiled: 9
+
+Resident Evil Requiem received widespread acclaim on PC, achieving the highest user score of 9.5 on Metacritic. Users praised its blend of classic survival horror and modern action elements, exceptional graphics via the RE Engine, and engaging dual protagonists. However, some critics noted minor issues like an underwhelming narrative and sluggish pacing.
+
+User: search US Israel attack on Iran, summary, no more than three sentences           
+Agent: 2026-03-05 11:53:07,292 - GraniteAgent - INFO - Sanitized query for search engine: 'us israel attack on iran'
+2026-03-05 11:53:07,293 - GraniteAgent - INFO - Broad Search Triggered: 'us israel attack on iran'
+2026-03-05 11:53:09,834 - GraniteAgent - INFO - Scraping URL: https://en.wikipedia.org/wiki/Iran–Israel_war
+2026-03-05 11:53:10,731 - GraniteAgent - INFO - Successfully validated deep context from: https://en.wikipedia.org/wiki/Iran–Israel_war
+2026-03-05 11:53:16,716 - GraniteAgent - INFO - Total valid sources compiled: 9
+
+The US and Israel conducted simultaneous attacks on Iran on February 28, 2026, targeting 27 locations including Iranian military bases, Israeli facilities, and Kuwait airports. Iran retaliated with strikes on US and Israeli bases across the Middle East, hitting six countries including Iraq, Saudi Arabia, and Oman. The conflict escalated rapidly, with Iranian forces also clashing with Hezbollah in Lebanon and Kuwaiti authorities detaining US pilots.
 ```
 
 ## 🚀 Usage
