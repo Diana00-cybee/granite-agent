@@ -80,29 +80,35 @@ python cli.py
 #### Web Search
 Activate using keyword **search**:
 
-```
+``
 search <query>
-```
+``
 
 #### Save File
 Activate using keyword **save**:
 
-```
+``
 save
-```
+``
 
 #### Answer Format
 Activate using one of these keywords:
 
-```
-bullet point
----
-numbered
----
-clean
----
+``
+bullet point |
+numbered |
+clean |
 markdown
-```
+``
+
+#### Clean Output
+To have cleaner output use **no more than x sentences**:
+
+``
+no more than three sentences |
+no more than five sentences |
+no more than ten sentences
+``
 
 ## ☕ Support
 If you find this project valuable, consider supporting my work:
