@@ -1,6 +1,6 @@
 # 🥷 Granite Agent
 
-Semi-autonomous SLM agent powered by IBM Granite.
+Semi-autonomous intelligent small agent powered by IBM Granite.
 
 Granite Agent is blazing fast using Granite 2B model and 4-bit quantization.
 
