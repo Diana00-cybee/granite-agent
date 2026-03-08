@@ -94,10 +94,7 @@ keyword: whitelist
 ## Answer Format
 use one of these keywords:
 
-bullet point
-numbered
-markdown
-clean
+bullet point|numbered|markdown|clean
 
 ## Shorter Sentence
 use one of these keywords:
