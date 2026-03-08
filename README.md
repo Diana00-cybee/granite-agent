@@ -1,6 +1,6 @@
 # 🥷 Granite Agent
 
-Semi-autonomous intelligent small agent powered by IBM Granite.
+Intelligent semi-autonomous small agent powered by Granite 2B model.
 
 ## ⭐ Key Features
 
