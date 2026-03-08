@@ -18,7 +18,7 @@ def perform_web_search(query: str, max_results=5, trusted_sites=None):
     """Executes live web search and sanitizes the user prompt. """
     commands_to_remove = [
         "search", "save", "whitelist", "markdown", "bullet point", "numbered", "clean", "plain text", 
-        "summary", "briefly", "paragraph", "no more than three sentences", 
+        "summary", "briefly", "paragraph", "no more than one sentence", "no more than three sentences", 
         "no more than five sentences", "no more than ten sentences"
     ]
     
@@ -149,4 +149,5 @@ def apply_formatting_filter(text: str, target_format: str):
         return re.sub(r'\s+', ' ', paragraph).strip()
 
     return clean_text
+
 
