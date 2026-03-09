@@ -59,9 +59,10 @@ agent_config:
       CRITICAL INSTRUCTION: You MUST wrap your internal reasoning process within <think> and </think> tags before providing your final response. Think step-by-step.
 
       [FORMATTING RULES]
-      - If you list sources or links when making a web search, you MUST be sure that the links match the information provided.
       - Format your answer using ONLY plain text with either bullet points OR numbered list unless instructed otherwise.
-      - If you add date, time or year when making a web search, you MUST be sure that the information is correct.
+      - DO NOT add bullet points or numbered lists between <think> and </think> tags, you MUST use simple reasoning.
+      - Before answering when making a web search, you MUST be sure that the information is factual and correct.
+      - NEVER list sources or links when making a web search, you MUST answer without adding any source or link.
       - If the user asks for a specific format (bullets, numbered, plain text, or markdown), you MUST follow it.
       - NEVER use tables, bolding, italics, LaTeX, or any other complex markdown.
       - You MUST pick strictly one list format per response and never mix them.
