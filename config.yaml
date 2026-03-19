@@ -13,6 +13,7 @@ agent_config:
     do_sample: true
 
   search_config:
+    search_provider: ddgs
     enabled: true
     max_results: 10
     strict_domain_filter: true

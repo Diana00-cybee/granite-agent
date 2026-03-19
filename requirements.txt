@@ -7,3 +7,4 @@ peft>=0.10.0
 curl_cffi
 Pillow
 ddgs
+tavily-python
