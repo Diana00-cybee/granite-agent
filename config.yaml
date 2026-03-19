@@ -14,7 +14,7 @@ agent_config:
 
   search_config:
     # search_provider: 'ddgs' (default) or 'tavily' (requires TAVILY_API_KEY env var)
-    search_provider: ddgs
+    # search_provider: ddgs
     enabled: true
     max_results: 10
     strict_domain_filter: true

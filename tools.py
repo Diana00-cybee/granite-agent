@@ -21,6 +21,16 @@ try:
 except ImportError:
     TavilyClient = None
 
+_tavily_client = None
+
+
+def _get_tavily_client():
+    """Returns a lazily-initialised, cached TavilyClient instance."""
+    global _tavily_client
+    if _tavily_client is None:
+        _tavily_client = TavilyClient()
+    return _tavily_client
+
 
 def get_current_datetime():
     """Returns the current system time."""
@@ -199,14 +209,15 @@ def _get_search_provider():
     """Determines which search provider to use based on config and env vars.
 
     Priority:
-    1. Explicit search_provider value in config.yaml (if set and not empty).
-    2. If no explicit provider (or provider is 'ddgs') and TAVILY_API_KEY env var
-       is present, auto-select 'tavily'.
+    1. Explicit search_provider value in config.yaml (if set and not empty),
+       use that provider directly.
+    2. If no explicit provider is configured and TAVILY_API_KEY env var is
+       present, auto-select 'tavily'.
     3. Otherwise fall back to 'ddgs'.
     """
     search_config = _load_search_config()
     provider = search_config.get('search_provider', '')
-    if provider and provider != 'ddgs':
+    if provider:
         return provider
     # Auto-select tavily when the API key is available and no explicit provider is set
     if os.environ.get('TAVILY_API_KEY'):
@@ -221,7 +232,7 @@ def _perform_tavily_search(clean_query, max_results, trusted_sites):
         return "Error: tavily-python package is not installed."
 
     try:
-        client = TavilyClient()
+        client = _get_tavily_client()
 
         search_kwargs = {
             "query": clean_query,
@@ -273,22 +284,22 @@ def _perform_tavily_search(clean_query, max_results, trusted_sites):
 def perform_web_search(query: str, max_results=5, trusted_sites=None):
     """Executes live web search and scrapes primary source."""
     commands_to_remove = [
-        "search", "save", "whitelist", "markdown", "bullet point", "numbered", "clean", "paragraph", "no more than one sentence",
+        "search", "save", "whitelist", "markdown", "bullet point", "numbered", "clean", "paragraph", "no more than one sentence", 
         "no more than three sentences", "no more than five sentences", "no more than ten sentences"
     ]
-
+    
     clean_query = query.lower()
     for cmd in commands_to_remove:
         clean_query = re.sub(rf'\b{cmd}\b', '', clean_query, flags=re.IGNORECASE)
-
+    
     clean_query = re.sub(r'\b[\w-]+\.(pdf|docx|txt|html|pptx|md|log)\b', '', clean_query, flags=re.IGNORECASE)
     clean_query = re.sub(r'[^\w\s-]', '', clean_query).strip()
-
+    
     if not clean_query:
         clean_query = query
-
+        
     agent_logger.info(f"Sanitized query for search engine: '{clean_query}'")
-
+    
     # Dispatch to Tavily if configured
     search_provider = _get_search_provider()
     if search_provider == 'tavily':
