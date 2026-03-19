@@ -4,6 +4,8 @@ import torch
 import os
 import re
 import gc
+import yaml
+from functools import lru_cache
 
 from transformers import AutoProcessor, AutoModelForImageTextToText, BitsAndBytesConfig
 from docling.document_converter import DocumentConverter
@@ -181,19 +183,34 @@ def analyze_local_image(image_path: str, user_prompt: str):
     return formatted_output
 
 
-def _get_search_provider():
-    """Determines which search provider to use based on config and env vars."""
+@lru_cache(maxsize=1)
+def _load_search_config():
+    """Loads and caches the search_config block from config.yaml."""
     try:
-        import yaml
         config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
         with open(config_path, "r") as f:
             config = yaml.safe_load(f)
-        provider = config.get('agent_config', {}).get('search_config', {}).get('search_provider', '')
-        if provider:
-            return provider
+        return config.get('agent_config', {}).get('search_config', {})
     except Exception:
-        pass
-    # Fall back: if TAVILY_API_KEY is set and no explicit provider, use ddgs (default)
+        return {}
+
+
+def _get_search_provider():
+    """Determines which search provider to use based on config and env vars.
+
+    Priority:
+    1. Explicit search_provider value in config.yaml (if set and not empty).
+    2. If no explicit provider (or provider is 'ddgs') and TAVILY_API_KEY env var
+       is present, auto-select 'tavily'.
+    3. Otherwise fall back to 'ddgs'.
+    """
+    search_config = _load_search_config()
+    provider = search_config.get('search_provider', '')
+    if provider and provider != 'ddgs':
+        return provider
+    # Auto-select tavily when the API key is available and no explicit provider is set
+    if os.environ.get('TAVILY_API_KEY'):
+        return 'tavily'
     return 'ddgs'
 
 

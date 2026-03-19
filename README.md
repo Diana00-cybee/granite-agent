@@ -100,6 +100,22 @@ granite-agent uses simple text commands. Here are some basic examples to get you
 
 You do not need to remember all commands right away. Use `help` to see what you can do.
 
+## 🔍 Search Provider Configuration
+
+granite-agent supports two search backends: **DuckDuckGo** (default) and **Tavily**.
+
+To switch to Tavily:
+
+1. Set `search_provider: tavily` in `config.yaml` under `search_config`.
+2. Export your Tavily API key as an environment variable:
+   ```
+   export TAVILY_API_KEY=tvly-YOUR_API_KEY
+   ```
+
+If `TAVILY_API_KEY` is set in the environment and no explicit `search_provider` is configured, Tavily will be used automatically.
+
+You can get a free Tavily API key (1,000 credits/month) at https://app.tavily.com.
+
 ## 🔧 Tips for Using granite-agent
 
 - Make sure you have an internet connection when performing online searches.

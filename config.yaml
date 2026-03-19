@@ -13,6 +13,7 @@ agent_config:
     do_sample: true
 
   search_config:
+    # search_provider: 'ddgs' (default) or 'tavily' (requires TAVILY_API_KEY env var)
     search_provider: ddgs
     enabled: true
     max_results: 10
