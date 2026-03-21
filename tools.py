@@ -4,6 +4,8 @@ import torch
 import os
 import re
 import gc
+import yaml
+from functools import lru_cache
 
 from transformers import AutoProcessor, AutoModelForImageTextToText, BitsAndBytesConfig
 from docling.document_converter import DocumentConverter
@@ -13,6 +15,21 @@ from scrape import scrape_url
 from log import agent_logger
 from ddgs import DDGS
 from PIL import Image
+
+try:
+    from tavily import TavilyClient
+except ImportError:
+    TavilyClient = None
+
+_tavily_client = None
+
+
+def _get_tavily_client():
+    """Returns a lazily-initialised, cached TavilyClient instance."""
+    global _tavily_client
+    if _tavily_client is None:
+        _tavily_client = TavilyClient()
+    return _tavily_client
 
 
 def get_current_datetime():
@@ -176,6 +193,94 @@ def analyze_local_image(image_path: str, user_prompt: str):
     return formatted_output
 
 
+@lru_cache(maxsize=1)
+def _load_search_config():
+    """Loads and caches the search_config block from config.yaml."""
+    try:
+        config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
+        with open(config_path, "r") as f:
+            config = yaml.safe_load(f)
+        return config.get('agent_config', {}).get('search_config', {})
+    except Exception:
+        return {}
+
+
+def _get_search_provider():
+    """Determines which search provider to use based on config and env vars.
+
+    Priority:
+    1. Explicit search_provider value in config.yaml (if set and not empty),
+       use that provider directly.
+    2. If no explicit provider is configured and TAVILY_API_KEY env var is
+       present, auto-select 'tavily'.
+    3. Otherwise fall back to 'ddgs'.
+    """
+    search_config = _load_search_config()
+    provider = search_config.get('search_provider', '')
+    if provider:
+        return provider
+    # Auto-select tavily when the API key is available and no explicit provider is set
+    if os.environ.get('TAVILY_API_KEY'):
+        return 'tavily'
+    return 'ddgs'
+
+
+def _perform_tavily_search(clean_query, max_results, trusted_sites):
+    """Executes web search using Tavily and returns formatted results."""
+    if TavilyClient is None:
+        agent_logger.error("tavily-python is not installed. Install it with: pip install tavily-python")
+        return "Error: tavily-python package is not installed."
+
+    try:
+        client = _get_tavily_client()
+
+        search_kwargs = {
+            "query": clean_query,
+            "max_results": max_results,
+            "search_depth": "advanced",
+        }
+        if trusted_sites:
+            search_kwargs["include_domains"] = trusted_sites[:10]
+
+        agent_logger.info(f"Executing Tavily search for: '{clean_query}'")
+        response = client.search(**search_kwargs)
+
+        tavily_results = response.get("results", [])
+        if not tavily_results:
+            agent_logger.warning(f"No Tavily results found for query: {clean_query}")
+            return "No relevant web data found."
+
+        results = []
+        has_deep_context = False
+
+        for r in tavily_results:
+            url = r.get("url", "")
+            content = r.get("content", "")
+
+            if not has_deep_context and content:
+                results.append(
+                    f"--- VALIDATED DEEP CONTEXT ---\n"
+                    f"SOURCE: {url}\n"
+                    f"CONTENT:\n{content}\n"
+                    f"---------------------------"
+                )
+                has_deep_context = True
+                agent_logger.info(f"Successfully validated context from: {url}")
+                continue
+
+            results.append(f"SOURCE: {url}\nSNIPPET: {content}")
+
+        total_sources = len(results)
+        agent_logger.info(f"Total valid sources compiled: {total_sources}")
+
+        formatted_results = f"[TOTAL SOURCES COMPILED: {total_sources}]\n\n" + "\n\n".join(results)
+        return formatted_results
+
+    except Exception as e:
+        agent_logger.error(f"Tavily Search Error: {str(e)}")
+        return f"Error connecting to search engine: {str(e)}"
+
+
 def perform_web_search(query: str, max_results=5, trusted_sites=None):
     """Executes live web search and scrapes primary source."""
     commands_to_remove = [
@@ -194,6 +299,11 @@ def perform_web_search(query: str, max_results=5, trusted_sites=None):
         clean_query = query
         
     agent_logger.info(f"Sanitized query for search engine: '{clean_query}'")
+    
+    # Dispatch to Tavily if configured
+    search_provider = _get_search_provider()
+    if search_provider == 'tavily':
+        return _perform_tavily_search(clean_query, max_results, trusted_sites)
 
     ddgs_results = []
     
